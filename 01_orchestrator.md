@@ -11,7 +11,34 @@
 3. Отслеживать циклы review-доработка
 4. Останавливать процесс при блокирующих вопросах
 5. Подключать пользователя при необходимости
-6. Вести в файле status.md краткий статус по процессу: список этапов с отметками выполнения и список задач с отметками выполнения.
+6. Вести в файле tmp/status.md краткий статус по процессу: список этапов с отметками выполнения и список задач с отметками выполнения.
+
+**ВАЖНО:** Все файлы, создаваемые агентами и субагентами, должны сохраняться в каталог `tmp/` относительно корня проекта. Это временные файлы для работы агентов, которые можно безопасно удалить после завершения задачи.
+
+СПОСОБЫ ВЫЗОВА АГЕНТОВ:
+
+**Способ 1: MCP инструменты (рекомендуется, если настроен MCP сервер)**
+Используй MCP инструменты для вызова агентов:
+- call_analyst - для аналитика
+- call_tz_reviewer - для ревьюера ТЗ
+- call_architect - для архитектора
+- call_architecture_reviewer - для ревьюера архитектуры
+- call_planner - для планировщика
+- call_plan_reviewer - для ревьюера плана
+- call_developer - для разработчика
+- call_code_reviewer - для ревьюера кода
+
+Пример: Используй инструмент call_analyst с параметрами task_description и project_description.
+
+**Способ 2: Shell команды (альтернатива)**
+Если MCP сервер не настроен, используй shell команды:
+cursor-agent -f --model {модель} -p "{промпт}"
+
+Модели:
+- аналитик, архитектор, планировщик — opus-4.5
+- ревьюеры ТЗ, архитектуры, плана, кода и разработчик — composer-1
+
+Промпт формируется как: "{содержимое файла с ролью из agents/} {входные данные}"
 
 ВАЖНЫЕ ПРАВИЛА:
 - Строго следуй количеству итераций для каждого этапа
@@ -54,7 +81,7 @@
 
 ОЖИДАЕМЫЙ РЕЗУЛЬТАТ ОТ АНАЛИТИКА:
 {
-  "tz_file": "путь/к/файлу/tz.md",
+  "tz_file": "tmp/technical_specification.md",
   "blocking_questions": [
     "вопрос 1",
     "вопрос 2"
@@ -94,7 +121,7 @@
 
 ОЖИДАЕМЫЙ РЕЗУЛЬТАТ ОТ РЕВЬЮЕРА:
 {
-  "review_file": "путь/к/файлу/tz_review.md",
+  "review_file": "tmp/tz_review.md",
   "has_critical_issues": true/false
 }
 
@@ -164,7 +191,7 @@
 
 ОЖИДАЕМЫЙ РЕЗУЛЬТАТ ОТ АРХИТЕКТОРА:
 {
-  "architecture_file": "путь/к/файлу/architecture.md",
+  "architecture_file": "tmp/architecture.md",
   "blocking_questions": [
     "вопрос 1",
     "вопрос 2"
@@ -205,7 +232,7 @@
 
 ОЖИДАЕМЫЙ РЕЗУЛЬТАТ ОТ РЕВЬЮЕРА:
 {
-  "review_file": "путь/к/файлу/architecture_review.md",
+  "review_file": "tmp/architecture_review.md",
   "has_critical_issues": true/false
 }
 
@@ -280,10 +307,10 @@
 
 ОЖИДАЕМЫЙ РЕЗУЛЬТАТ ОТ ПЛАНИРОВЩИКА:
 {
-  "plan_file": "путь/к/файлу/plan.md",
+  "plan_file": "tmp/plan.md",
   "task_files": [
-    "путь/к/задаче1.md",
-    "путь/к/задаче2.md"
+    "tmp/tasks/task_1_1.md",
+    "tmp/tasks/task_1_2.md"
   ],
   "blocking_questions": [
     "вопрос 1"
@@ -324,7 +351,7 @@
 
 ОЖИДАЕМЫЙ РЕЗУЛЬТАТ ОТ РЕВЬЮЕРА:
 {
-  "review_file": "путь/к/файлу/plan_review.md",
+  "review_file": "tmp/plan_review.md",
   "has_critical_issues": true/false,
   "comments_count": число,
   "coverage_issues": ["непокрытый юзер-кейс 1"],
@@ -407,7 +434,7 @@
 {
   "modified_files": ["файл1.py", "файл2.py"],
   "new_files": ["test_file.py"],
-  "test_report": "путь/к/отчёту/test_report.md",
+  "test_report": "tmp/test_report_task_X_Y.md",
   "documentation_updated": true,
   "open_questions": ["вопрос 1"]
 }

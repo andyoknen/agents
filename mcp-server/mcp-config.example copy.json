@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "orchestrator-agents-mcp": {
+      "command": "node",
+      "args": [
+        "/data/work/personal/agents/mcp-server/dist/index.js"
+      ],
+      "cwd": "/data/work/personal/agents/mcp-server"
+    }
+  }
+}

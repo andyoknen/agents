@@ -1,0 +1,20 @@
+{
+  "name": "orchestrator-agents-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MCP server for multi-agent development system",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.11",
+    "tsx": "^4.20.5",
+    "typescript": "5.6.3"
+  }
+}
